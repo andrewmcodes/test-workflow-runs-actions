@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      should_fail:
+        description: 'Should the workflow fail?'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 permissions: {}
 
@@ -14,4 +24,10 @@ jobs:
       - name: Run test CI
         run: |
           echo "Running test CI"
-          exit 1
+          if [ "${{ github.event.inputs.should_fail }}" = "true" ]; then
+            echo "Workflow configured to fail"
+            exit 1
+          else
+            echo "Workflow configured to succeed"
+            exit 0
+          fi

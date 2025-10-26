@@ -5,9 +5,15 @@ This repository contains GitHub Actions workflows to test the `workflow_run` tri
 ## Workflows
 
 ### CI Workflow (`.github/workflows/ci.yml`)
-- **Trigger**: Runs on push to `main` branch
-- **Purpose**: Simulates a failing CI workflow for testing
-- **Behavior**: Prints "Running test CI" and exits with failure (`exit 1`)
+- **Triggers**: 
+  - Runs on push to `main` branch
+  - Can be manually triggered via `workflow_dispatch`
+- **Purpose**: Simulates CI workflow for testing with configurable success/failure status
+- **Behavior**: 
+  - By default, prints "Running test CI" and succeeds (`exit 0`)
+  - When triggered manually via workflow_dispatch, accepts a `should_fail` input parameter:
+    - `false` (default): Workflow succeeds
+    - `true`: Workflow fails (`exit 1`)
 
 ### Notify on Failure Workflow (`.github/workflows/notify_on_failure.yml`)
 - **Trigger**: Runs when the "CI" workflow completes on `main` branch
