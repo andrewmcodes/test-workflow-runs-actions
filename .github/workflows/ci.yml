@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test CI
+        run: |
+          echo "Running test CI"
+          exit 1
