@@ -158,6 +158,10 @@ jobs:
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
+        with:
+          name: test-results
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Analyze logs
         run: ./scripts/analyze-failure.sh
       - name: Post analysis to PR
@@ -266,15 +270,16 @@ The `github.event.workflow_run.conclusion` can have the following values:
 The `github.event.workflow_run` object provides useful information about the failed workflow:
 
 ```yaml
-- name: Log workflow info
-  run: |
-    echo "Workflow: ${{ github.event.workflow_run.name }}"
-    echo "Conclusion: ${{ github.event.workflow_run.conclusion }}"
-    echo "Branch: ${{ github.event.workflow_run.head_branch }}"
-    echo "SHA: ${{ github.event.workflow_run.head_sha }}"
-    echo "Run ID: ${{ github.event.workflow_run.id }}"
-    echo "Run URL: ${{ github.event.workflow_run.html_url }}"
-    echo "Actor: ${{ github.event.workflow_run.triggering_actor.login }}"
+steps:
+  - name: Log workflow info
+    run: |
+      echo "Workflow: ${{ github.event.workflow_run.name }}"
+      echo "Conclusion: ${{ github.event.workflow_run.conclusion }}"
+      echo "Branch: ${{ github.event.workflow_run.head_branch }}"
+      echo "SHA: ${{ github.event.workflow_run.head_sha }}"
+      echo "Run ID: ${{ github.event.workflow_run.id }}"
+      echo "Run URL: ${{ github.event.workflow_run.html_url }}"
+      echo "Actor: ${{ github.event.workflow_run.triggering_actor.login }}"
 ```
 
 ## Testing Your Implementation
