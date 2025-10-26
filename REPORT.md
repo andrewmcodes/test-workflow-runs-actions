@@ -160,7 +160,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: test-results
-          run-id: ${{ github.event.workflow_run.id }}
+          run_id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Analyze logs
         run: ./scripts/analyze-failure.sh
